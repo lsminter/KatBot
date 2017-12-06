@@ -66,7 +66,7 @@ var greetings = [
     ],
     welcometext =
         "Welcome! chat messages should not be longer than 500 characters. " +
-        "Here's a list of the available commands: !about, !hello, !saymyname, !dicefules, !roll, !points, !testsafe.",
+        "Here's a list of the available commands: !about, !hello, !saymyname, !testsafe.",
     channelName = "katevolved",
     commandCounter = 0,
     chatMaxLength = 500;
@@ -90,7 +90,7 @@ var options = {
         password: "oauth:vwohov7is1pou2rw9sylme9bra0z64"
     },
     channels: [
-    "katevolved",
+    "KatEvolved",
     "minterhero"
     ]
 }
@@ -110,11 +110,6 @@ var Commands = {
         client.action(channel, "Until next time " + user['display-name'] + "! " + getRandomListItem(emotes) );
     },
 
-    '!rolltheminter': function (channel, user, message, self)
-    {
-        client.action(channel, user['display-name'] + " is the coolest person ever!");
-    },
-
     '!hi': function (channel, user, message, self)
     {
         client.action(channel, getRandomListItem(greetings) + " " + getRandomListItem(emotes));
@@ -123,40 +118,6 @@ var Commands = {
     '!saymyname': function (channel, user, message, self)
     {
         client.action(channel, user['display-name'] + "! " + getRandomListItem(emotes));
-    },
-
-    '!dicerules': function (channel, user, message, self)
-    {
-        client.action(channel, "The dice has 100 sides, if you roll a 1 you are timed out. Your scores are saved by the bot.")
-    },
-
-    '!roll': function (channel, user, message, self)
-    {
-        var diceResult = String(Math.floor(Math.random() * 100) + 1);
-        client.action(channel, user['display-name'] + ", you rolled " + diceResult + "!");
-        if (diceResult === 1)
-        {
-            client.timeout(channel, user['display-name'], 300, "Oh no, you rolled a 1! BibleThump")
-        }
-        fs.appendFile('rollthediceStats.txt', user['display-name'] + " rolled " + diceResult + "\n");
-    },
-    '!points': function (channel, user, message, self)
-    {
-        var userStats, score = 0;
-        fs.readFile('rollthediceStats.txt', 'utf-8', function (err, data)
-        {
-            if (err) console.log(err);
-            userStats = data.split('\n');
-            userStats.clean("");
-            userStats.forEach(function (stat)
-            {
-                if (stat.indexOf(user['display-name']) >= 0)
-                {
-                    score += parseInt(stat.split(" ")[2]);
-                }
-            });
-            client.action(channel, user['display-name'] + " has scored " + score + " points so far!");
-        });
     },
 
     '!testsafe': function (channel, user, message, self)
@@ -173,10 +134,10 @@ var Commands = {
 };
 
 client.on("resub", function (channel, username, months, message) {
-    client.action('Thank you ' + username + ' for subscribing!')
+    client.action(channel, 'Thank you ' + user['display-name'] + ' for subscribing! <3')
 });
 client.on("subscribers", function (channel, enabled) {
-    client.action('Thank you ' + username + ' for subscribing!')
+    client.action(channel, 'Thank you ' + user['display-name'] + ' for subscribing! <3')
 });
 
 // LIST COMMAND KEYS
@@ -204,7 +165,7 @@ client.on("chat", function (channel, user, message, self)
         // check if command exists
         if (Commands.hasOwnProperty(parsedCommand))
         {
-            // check if commands are sent too fast (counter starts at 0)
+
 
             // execute command
             Commands[parsedCommand](channel, user, message, self);
@@ -221,7 +182,7 @@ setInterval(function() {
     } else {
         interMessagesCounter = 0;
     }
-}, 600000);
+}, 1200000);
 
 // CONNECT BOT
 client.connect();
