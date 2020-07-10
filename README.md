@@ -2,4 +2,4 @@
 
 This is the TwitchBot for KatEvolved's Channel.
 
-This is a test.
+Learning about all contributors bot.
