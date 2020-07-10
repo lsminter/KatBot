@@ -1,6 +1,7 @@
 {
   "files": [
-    "testing-bot/README.md"
+    "testing-bot/README.md",
+    "README.md"
   ],
   "imageSize": 100,
   "commit": false,
